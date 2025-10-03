@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="299beb26-f778-4c37-a4aa-9453b6e321c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_missil/business/MissilService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_missil/controller/MissilController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_missil/infrastructure/repository/MissilRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_usuario/CadastroUsuarioApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_missil/CadastroMissilApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_usuario/business/UsuarioService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_usuario/controller/UsuarioController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_usuario/infrastructure/entitys/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_missil/infrastructure/entitys/Missil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/javanauta/cadastro_usuario/infrastructure/repository/UsuarioRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/javanauta/cadastro_usuario/CadastroUsuarioApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/javanauta/cadastro_missil/CadastroMissilApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Static/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Static/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,19 +33,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.CadastroMissilApplication.executor": "Run",
-    "Application.CadastroUsuarioApplication.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ra2357036/Documents/cadastro-usuario",
-    "settings.editor.selected.configurable": "project.propCompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CadastroMissilApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CadastroUsuarioApplication.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ra2357036/Documents/cadastro-usuario&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="CadastroMissilApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.javanauta.cadastro_missil.CadastroMissilApplication" />
