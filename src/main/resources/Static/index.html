@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missile Control Center</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>My Talking Warhead</h1>
+    </header>
+
+    <main>
+        <section class="form-section">
+            <h2>Cadastro de Mísseis</h2>
+            <form id="missil-form">
+                <input type="hidden" id="missil-id">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="e.g., SA-2" required>
+                </div>
+                <div class="form-group">
+                    <label for="pais">País</label>
+                    <input type="text" id="pais" placeholder="e.g., URSS" required>
+                </div>
+                <div class="form-group">
+                    <label for="potencia">Potência</label>
+                    <input type="text" id="potencia" placeholder="e.g., 475 kt" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Adicionar Míssil</button>
+                    <button type="button" id="clear-btn" class="btn btn-secondary">Clear</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="list-section">
+            <h2>Meus Mísseis</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>País</th>
+                        <th>Potência</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody id="missil-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const API_URL = 'http://localhost:8081/missil';
+
+        const form = document.getElementById('missil-form');
+        const missilIdInput = document.getElementById('missil-id');
+        const nomeInput = document.getElementById('nome');
+        const paisInput = document.getElementById('pais');
+        const potenciaInput = document.getElementById('potencia');
+        const clearBtn = document.getElementById('clear-btn');
+        const missilTableBody = document.getElementById('missil-table-body');
+
+        // --- FETCH & DISPLAY ALL MISSILES ---
+        const fetchMisseis = async () => {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const misseis = await response.json();
+
+                missilTableBody.innerHTML = ''; // Clear existing table
+                if (misseis.length === 0) {
+                    missilTableBody.innerHTML = '<tr><td colspan="5" class="no-data">No missiles in the arsenal.</td></tr>';
+                } else {
+                    misseis.forEach(missil => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${missil.id}</td>
+                            <td>${missil.nome}</td>
+                            <td>${missil.pais}</td>
+                            <td>${missil.potencia}</td>
+                            <td class="actions">
+                                <button class="btn-action btn-edit" data-id="${missil.id}">Edit</button>
+                                <button class="btn-action btn-delete" data-nome="${missil.nome}">Delete</button>
+                            </td>
+                        `;
+                        missilTableBody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to fetch missiles:', error);
+                missilTableBody.innerHTML = '<tr><td colspan="5" class="no-data">Error loading data.</td></tr>';
+            }
+        };
+
+        // --- SAVE (CREATE or UPDATE) MISSILE ---
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const missilData = {
+                nome: nomeInput.value,
+                pais: paisInput.value,
+                potencia: potenciaInput.value,
+            };
+
+            const missilId = missilIdInput.value;
+            const isUpdating = missilId !== '';
+
+            const url = isUpdating ? `${API_URL}/${missilId}` : API_URL;
+            const method = isUpdating ? 'PUT' : 'POST';
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(missilData),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to ${isUpdating ? 'update' : 'create'} missile`);
+                }
+
+                clearForm();
+                fetchMisseis();
+            } catch (error) {
+                console.error('Error saving missile:', error);
+                alert('Could not save missile. Check console for details.');
+            }
+        });
+
+        // --- EDIT & DELETE from table buttons ---
+        missilTableBody.addEventListener('click', async (event) => {
+            const target = event.target;
+
+            // Handle Edit
+            if (target.classList.contains('btn-edit')) {
+                const id = target.dataset.id;
+                // Find the missile data from the table to populate the form
+                const row = target.closest('tr');
+                const cells = row.getElementsByTagName('td');
+                missilIdInput.value = cells[0].textContent;
+                nomeInput.value = cells[1].textContent;
+                paisInput.value = cells[2].textContent;
+                potenciaInput.value = cells[3].textContent;
+                window.scrollTo(0, 0); // Scroll to top to see the form
+            }
+
+            // Handle Delete
+            if (target.classList.contains('btn-delete')) {
+                const nome = target.dataset.nome;
+                if (confirm(`Are you sure you want to delete the missile "${nome}"?`)) {
+                     try {
+                        const response = await fetch(`${API_URL}?nome=${encodeURIComponent(nome)}`, {
+                            method: 'DELETE'
+                        });
+                         if (!response.ok) {
+                             throw new Error('Failed to delete missile');
+                         }
+                        fetchMisseis();
+                     } catch(error) {
+                         console.error('Error deleting missile:', error);
+                         alert('Could not delete missile.');
+                     }
+                }
+            }
+        });
+
+        // --- CLEAR FORM ---
+        const clearForm = () => {
+            form.reset();
+            missilIdInput.value = '';
+        };
+
+        clearBtn.addEventListener('click', clearForm);
+
+        // --- INITIAL LOAD ---
+        fetchMisseis();
+    });
+</script>
+</body>
+</html>
